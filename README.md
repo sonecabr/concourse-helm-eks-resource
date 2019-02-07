@@ -2,8 +2,8 @@
 
 Deploy to [Kubernetes Helm](https://github.com/kubernetes/helm) from [Concourse](https://concourse.ci/).
 
-Forked from linkyard/concourse-helm-resource
-Modified to support autogeneration of kubeconfig for AWS EKS and AWS STS AssumeRole.
+Forked from linkyard/concourse-helm-resource.  
+Modified to support autogeneration of kubeconfig for AWS EKS and AWS STS AssumeRole.  
 
 Quick fixed.
 
