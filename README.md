@@ -3,7 +3,13 @@
 Deploy to [Kubernetes Helm](https://github.com/kubernetes/helm) from [Concourse](https://concourse.ci/).
 
 Forked from gbvanrenswoude/concourse-helm-eks-resource who forked from linkyard/concourse-helm-resource.  
-Added .aws folder copy to standard Docker build, so it's possible to get rid of sts, I strongly recommend to not publish your container on public registries. Bellow there is a code snip for how to proper configure your resource_type to download your private image:
+Added .aws folder copy to standard Docker build, so it's possible to get rid of sts, I strongly recommend to not publish your container on public registries. 
+
+### Requirements
+To be able to build this Docker image, a folder .aws in the root context path with proper credential file and config file is required.
+
+### How to use
+Bellow there is a code snip for how to proper configure your resource_type to download your private image:
 
 ```
 resource_types:
