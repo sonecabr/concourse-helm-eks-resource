@@ -2,7 +2,48 @@
 
 Deploy to [Kubernetes Helm](https://github.com/kubernetes/helm) from [Concourse](https://concourse.ci/).
 
-Forked from linkyard/concourse-helm-resource.  
+Forked from gbvanrenswoude/concourse-helm-eks-resource who forked from linkyard/concourse-helm-resource.  
+Added .aws folder copy to standard Docker build, so it's possible to get rid of sts, I strongly recommend to not publish your container on public registries. Bellow there is a code snip for how to proper configure your resource_type to download your private image:
+
+```
+resource_types:
+  - name: helm
+    type: docker-image
+    source:
+      repository: yourprivate repo (myuser/myrepo)
+      tag: concourse-helm-eks-resource-1.0.1
+      username: ((private-cr-user))
+      password: ((private-cr-password))
+```
+on resource it's should looks like:
+```
+- name: helm-release
+  type: helm
+  source:
+    aws_region: "us-east-1"
+    aws_eks_cluster_name: your-eks-cluster-name
+    use_awscli_eks_auth: "true"
+```
+on Jobs you can use like:
+```
+jobs:
+- name: apply-rollout
+  build_logs_to_retain: 2
+  plan:
+  - get: bitbucket-repo-prod
+  - put: helm-release
+    params:
+      chart: yourprivateorpublicchartrepo/charts/example
+      values: yourprivateorpublicchartrepo/charts/example/values.yaml
+      release: example-k8s-helm-chart
+      namespace: test
+      override_values:
+      - key: replicas
+        value: 1
+```
+
+Bellow you can see the original README.md
+
 Modified to support autogeneration of kubeconfig for AWS EKS and AWS STS AssumeRole.  
 
 Quick fixed.
