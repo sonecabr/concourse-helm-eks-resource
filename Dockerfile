@@ -27,7 +27,6 @@ RUN curl -L -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-
 ADD .aws /root/.aws # add your std aws credentials to been able to configure kubectl without sts
 ADD assets /opt/resource
 RUN chmod +x /opt/resource/*
-RUN chmod +x /root/.aws
 
 RUN mkdir -p "$(helm home)/plugins"
 RUN helm plugin install https://github.com/databus23/helm-diff
